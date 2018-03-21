@@ -1,0 +1,11 @@
+{
+    "compilerOptions": {
+        "target": "es5",
+        "module": "none",
+        "sourceRoot": "./src/",
+        "outFile": "./js-bin/app.js",
+        "sourceMap": true,
+        "inlineSources": true,
+        "jsx": "react"
+    }
+}
