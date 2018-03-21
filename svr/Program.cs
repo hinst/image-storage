@@ -12,6 +12,8 @@ namespace image_storage
 {
     public class Program
     {
+        const string root = "images";
+
         public static void Main(string[] args)
         {
             BuildWebHost(args).Run();
