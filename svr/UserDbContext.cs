@@ -9,7 +9,7 @@ namespace image_storage {
 
         static UserDbContext New() {
             var optionsBuilder = new DbContextOptionsBuilder<UserDbContext>();
-            optionsBuilder.UseSqlite("Data Source=blog.db");
+            optionsBuilder.UseSqlite("Data Source=users.db");
             return new UserDbContext(optionsBuilder.Options);            
         }
     }
