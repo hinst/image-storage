@@ -1,6 +1,6 @@
 namespace React {
     function addContents(element: HTMLElement, contents: any[]) {
-        for (var content in contents) {
+        for (var content of contents) {
             if (typeof content == "string")
                 element.innerHTML += content;
             if (typeof content == "object")
