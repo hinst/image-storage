@@ -12,7 +12,8 @@ namespace image_storage
 {
     public class Program
     {
-        public const string WebRoot = "images";
+        public const string WebRoot = "/images";
+        public static readonly string AppDir = Directory.GetCurrentDirectory();
 
         public static void Main(string[] args)
         {

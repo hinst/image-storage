@@ -1,7 +1,7 @@
 namespace hImageStorage {
     export class App {
         constructor() {
-            console.log("app");
+            var element = <b>hello</b>;
         }
     }
 }
