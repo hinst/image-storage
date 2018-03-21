@@ -39,16 +39,19 @@ namespace image_storage
             {
                 app.UseDeveloperExceptionPage();
             }
-            app.UseStaticFiles(new StaticFileOptions
-            {
+            app.UseStaticFiles(new StaticFileOptions {
                 FileProvider = new PhysicalFileProvider(
-                    Path.Combine(Directory.GetCurrentDirectory(), "../web/js-bin")),
+                    Path.Combine(Program.AppDir, "../web/js-bin")),
                 RequestPath = Program.WebRoot + "/js-bin"
             });
-            app.UseStaticFiles(new StaticFileOptions
-            {
+            app.UseStaticFiles(new StaticFileOptions {
                 FileProvider = new PhysicalFileProvider(
-                    Path.Combine(Directory.GetCurrentDirectory(), "../web/src-html")),
+                    Path.Combine(Program.AppDir, "../web/js-3rd")),
+                RequestPath = Program.WebRoot + "/js-3rd"
+            });
+            app.UseStaticFiles(new StaticFileOptions {
+                FileProvider = new PhysicalFileProvider(
+                    Path.Combine(Program.AppDir, "../web/src-html")),
                 RequestPath = ""
             });
             app.UseMvc();
