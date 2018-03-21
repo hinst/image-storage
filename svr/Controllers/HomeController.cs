@@ -8,6 +8,6 @@ namespace image_storage.Controllers {
         public FileResult Get() {
             return PhysicalFile(Path.Combine(Program.AppDir, "../web/src-html/index.html"), "text/html");
         }
-        
     }
+    
 }
