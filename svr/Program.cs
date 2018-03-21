@@ -12,7 +12,7 @@ namespace image_storage
 {
     public class Program
     {
-        public const string webRoot = "images";
+        public const string WebRoot = "images";
 
         public static void Main(string[] args)
         {
