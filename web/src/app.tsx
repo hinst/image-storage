@@ -2,7 +2,7 @@
 namespace hImageStorage {
     export class App {
         constructor() {
-            var element = <b>hello</b>;
+            const element = $(<b style="font-family:monospace">hello</b>);
             $("#main").append(element);
         }
     }
