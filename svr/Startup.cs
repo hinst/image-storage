@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
@@ -27,18 +29,19 @@ namespace image_storage
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<UserDbContext>();
-            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(o => o.LoginPath = Program.WebRoot + "/loginPage");
+            services.AddDbContext<UserDbContext>(o => o.UseSqlite("Data Source=users.db"));
+            services.AddIdentity<IdentityUser, IdentityRole>()
+                .AddEntityFrameworkStores<UserDbContext>();
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(o => o.LoginPath = Program.WebRoot + "/loginPage");
             services.AddMvc();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, UserManager<IdentityUser> userManager, UserDbContext userDb)
         {
             if (env.IsDevelopment())
-            {
                 app.UseDeveloperExceptionPage();
-            }
             app.UseStaticFiles(new StaticFileOptions {
                 FileProvider = new PhysicalFileProvider(
                     Path.Combine(Program.AppDir, "../web/js-bin")),
@@ -54,7 +57,16 @@ namespace image_storage
                     Path.Combine(Program.AppDir, "../web/src-html")),
                 RequestPath = ""
             });
+            app.UseAuthentication();
             app.UseMvc();
+            if (false) CreateAdminUser(userManager);
+        }
+
+        private void CreateAdminUser(UserManager<IdentityUser> userManager) {
+            var user = new IdentityUser();
+            user.UserName = "admin";
+            var result = userManager.CreateAsync(user, File.ReadAllText(Program.AppDir + "/adminPassword.txt")).Result;
+            Console.WriteLine(result);
         }
     }
 }
