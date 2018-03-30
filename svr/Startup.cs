@@ -38,7 +38,9 @@ namespace image_storage
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, UserManager<IdentityUser> userManager, UserDbContext userDb)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, 
+            UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager,
+            ILogger<Startup> logger)
         {
             if (env.IsDevelopment())
                 app.UseDeveloperExceptionPage();
@@ -59,10 +61,21 @@ namespace image_storage
             });
             app.UseAuthentication();
             app.UseMvc();
-            CreateAdminUser(userManager);
+            PrepareUsers(userManager, roleManager, logger);
         }
 
-        private void CreateAdminUser(UserManager<IdentityUser> userManager) {
+        private void PrepareUsers(UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager, ILogger<Startup> logger) {
+            CreateAdminRole(roleManager, logger);
+            CreateAdminUser(userManager, logger);
+        }
+
+        private void CreateAdminRole(RoleManager<IdentityRole> roleManager, ILogger<Startup> logger) {
+            var adminRole = new IdentityRole(Role.Admin.ToString());
+            var result = roleManager.CreateAsync(adminRole).Result;
+            logger.LogInformation(result.ToString());
+        }
+
+        private void CreateAdminUser(UserManager<IdentityUser> userManager, ILogger<Startup> logger) {
             var user = new IdentityUser();
             user.UserName = "admin";
             var result = userManager.CreateAsync(user, File.ReadAllText(Program.AppDir + "/adminPassword.txt")).Result;
