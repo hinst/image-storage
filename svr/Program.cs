@@ -7,6 +7,7 @@ using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using NLog.Web;
 
 namespace image_storage
 {
@@ -24,6 +25,10 @@ namespace image_storage
         public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
+                .ConfigureLogging((hosting, log) => {
+                    log.ClearProviders();
+                    log.AddConfiguration(hosting.Configuration.GetSection("Logging"));
+                }).UseNLog()
                 .Build();
     }
 }

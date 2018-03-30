@@ -12,13 +12,15 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
-using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using NLog;
 
 namespace image_storage
 {
     public class Startup
     {
+        Logger Log = LogManager.GetCurrentClassLogger();
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -39,10 +41,8 @@ namespace image_storage
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, 
-            UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager,
-            ILogger<Startup> logger)
+            UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager)
         {
-            logger.LogInformation("Configure...");
             if (env.IsDevelopment())
                 app.UseDeveloperExceptionPage();
             app.UseStaticFiles(new StaticFileOptions {
@@ -62,27 +62,28 @@ namespace image_storage
             });
             app.UseAuthentication();
             app.UseMvc();
-            PrepareUsers(userManager, roleManager, logger);
+            PrepareUsers(userManager, roleManager);
+            Log.Info("Configured");
         }
 
-        private void PrepareUsers(UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager, ILogger<Startup> logger) {
-            CreateAdminRole(roleManager, logger);
-            CreateAdminUser(userManager, logger);
+        private void PrepareUsers(UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager) {
+            CreateAdminRole(roleManager);
+            CreateAdminUser(userManager);
         }
 
-        private void CreateAdminRole(RoleManager<IdentityRole> roleManager, ILogger<Startup> logger) {
+        private void CreateAdminRole(RoleManager<IdentityRole> roleManager) {
             var adminRole = new IdentityRole(Role.Admin.ToString());
             var result = roleManager.CreateAsync(adminRole).Result;
-            logger.LogInformation("Admin role created: " + result.Succeeded);
+            Log.Info("Admin role created: " + result.Succeeded);
         }
 
-        private void CreateAdminUser(UserManager<IdentityUser> userManager, ILogger<Startup> logger) {
+        private void CreateAdminUser(UserManager<IdentityUser> userManager) {
             var admin = new IdentityUser();
             admin.UserName = "admin";
             var result = userManager.CreateAsync(admin, File.ReadAllText(Program.AppDir + "/adminPassword.txt")).Result;
-            logger.LogInformation(result.ToString());
+            Log.Info(result.ToString());
             var roleResult = userManager.AddToRoleAsync(admin, Role.Admin.ToString()).Result;
-            logger.LogInformation("Admin user created successfully: " + result.Succeeded + ", " + roleResult.Succeeded);
+            Log.Info("Admin user created successfully: " + result.Succeeded + ", " + roleResult.Succeeded);
         }
     }
 }
