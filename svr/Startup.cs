@@ -59,7 +59,7 @@ namespace image_storage
             });
             app.UseAuthentication();
             app.UseMvc();
-            if (false) CreateAdminUser(userManager);
+            CreateAdminUser(userManager);
         }
 
         private void CreateAdminUser(UserManager<IdentityUser> userManager) {
