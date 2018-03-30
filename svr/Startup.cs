@@ -42,6 +42,7 @@ namespace image_storage
             UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager,
             ILogger<Startup> logger)
         {
+            logger.LogInformation("Configure...");
             if (env.IsDevelopment())
                 app.UseDeveloperExceptionPage();
             app.UseStaticFiles(new StaticFileOptions {
@@ -72,14 +73,16 @@ namespace image_storage
         private void CreateAdminRole(RoleManager<IdentityRole> roleManager, ILogger<Startup> logger) {
             var adminRole = new IdentityRole(Role.Admin.ToString());
             var result = roleManager.CreateAsync(adminRole).Result;
-            logger.LogInformation(result.ToString());
+            logger.LogInformation("Admin role created: " + result.Succeeded);
         }
 
         private void CreateAdminUser(UserManager<IdentityUser> userManager, ILogger<Startup> logger) {
-            var user = new IdentityUser();
-            user.UserName = "admin";
-            var result = userManager.CreateAsync(user, File.ReadAllText(Program.AppDir + "/adminPassword.txt")).Result;
-            Console.WriteLine(result);
+            var admin = new IdentityUser();
+            admin.UserName = "admin";
+            var result = userManager.CreateAsync(admin, File.ReadAllText(Program.AppDir + "/adminPassword.txt")).Result;
+            logger.LogInformation(result.ToString());
+            var roleResult = userManager.AddToRoleAsync(admin, Role.Admin.ToString()).Result;
+            logger.LogInformation("Admin user created successfully: " + result.Succeeded + ", " + roleResult.Succeeded);
         }
     }
 }
