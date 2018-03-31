@@ -8,6 +8,11 @@ namespace image_storage.Controllers {
         public FileResult Get() {
             return PhysicalFile(Path.Combine(Program.AppDir, "../web/src-html/index.html"), "text/html");
         }
+
+        [HttpGet("CheckIfAdmin")]
+        public ActionResult CheckIfAdmin() {
+            return Json(this.User.IsInRole(Role.Admin.ToString()));
+        }
     }
     
 }
