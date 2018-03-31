@@ -45,21 +45,18 @@ namespace image_storage
         {
             if (env.IsDevelopment())
                 app.UseDeveloperExceptionPage();
-            app.UseStaticFiles(new StaticFileOptions {
-                FileProvider = new PhysicalFileProvider(
-                    Path.Combine(Program.AppDir, "../web/js-bin")),
-                RequestPath = Program.WebRoot + "/js-bin"
-            });
-            app.UseStaticFiles(new StaticFileOptions {
-                FileProvider = new PhysicalFileProvider(
-                    Path.Combine(Program.AppDir, "../web/js-3rd")),
-                RequestPath = Program.WebRoot + "/js-3rd"
-            });
-            app.UseStaticFiles(new StaticFileOptions {
-                FileProvider = new PhysicalFileProvider(
-                    Path.Combine(Program.AppDir, "../web/src-html")),
-                RequestPath = ""
-            });
+            void useStatic(string dir)
+            {
+                app.UseStaticFiles(new StaticFileOptions {
+                    FileProvider = new PhysicalFileProvider(
+                        Path.Combine(Program.AppDir, "../web/" + dir)),
+                    RequestPath = Program.WebRoot + "/" + dir
+                });
+            }
+            useStatic("js-bin");
+            useStatic("js-3rd");
+            useStatic("css-3rd");
+            useStatic("src-html");
             app.UseAuthentication();
             app.UseMvc();
             PrepareUsers(userManager, roleManager);
