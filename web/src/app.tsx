@@ -1,10 +1,21 @@
 /// <reference path="React.ts"/>
+/// <reference path="WebPath.ts"/>
+
 namespace hImageStorage {
+
+    export var webPath = "images"
+
     export class App {
+        public path = new hts.WebPath();
+
         constructor() {
-            const element = $(<b style="font-family:monospace">hello</b>);
-            $("#main").append(element);
+            return;
+        }
+
+        run() {
+
         }
     }
-    new App();
+    const app = new App();
+    app.run();
 }
