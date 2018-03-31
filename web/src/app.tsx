@@ -3,7 +3,7 @@
 
 namespace hImageStorage {
 
-    export var webPath = "images"
+    export var webPath = "/images"
 
     export class App {
         public path = new hts.WebPath();
@@ -13,6 +13,7 @@ namespace hImageStorage {
         }
 
         run() {
+            $("head").append($(<link rel="stylesheet" href={webPath + "/css-3rd/w3.css"}/>));
             if (this.path.checkRouteMatch(webPath)) {
             }
         }
