@@ -13,7 +13,8 @@ namespace hImageStorage {
         }
 
         run() {
-
+            if (this.path.checkRouteMatch(webPath)) {
+            }
         }
     }
     const app = new App();
