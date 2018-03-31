@@ -3,18 +3,19 @@
 
 namespace hImageStorage {
 
-    export var webPath = "/images"
-
     export class App {
+        public webPath = "/images"
         public path = new hts.WebPath();
+        public mainCtnr: JQuery;
 
         constructor() {
             return;
         }
 
         run() {
-            $("head").append($(<link rel="stylesheet" href={webPath + "/css-3rd/w3.css"}/>));
-            if (this.path.checkRouteMatch(webPath)) {
+            $("body").append(<a class="w3-btn w3-black" href={this.webPath}>ImageStorage</a>);
+            this.mainCtnr = $(<div class="w3-container"></div>);
+            if (this.path.checkRouteMatch(this.webPath)) {
             }
         }
     }
