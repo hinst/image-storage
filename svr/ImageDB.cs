@@ -1,3 +1,4 @@
+using System.Linq;
 using MongoDB.Driver;
 
 namespace image_storage {
@@ -18,6 +19,19 @@ namespace image_storage {
                 collection.Indexes.CreateOne(new IndexKeysDefinitionBuilder<ImageObject>().Ascending(x => x.DataHash));
                 collection.Indexes.CreateOne(new IndexKeysDefinitionBuilder<ImageObject>().Ascending(x => x.OriginalFileName));
                 return collection;
+            }
+        }
+
+        public ImageObject[] Headers {
+            get {
+                var documents = Images.Find(x => true).Project(Builders<ImageObject>.Projection.Exclude(x => x.Data)).ToList();
+                return documents.Select(document => {
+                    var o = new ImageObject();
+                    o.Id = document["_id"].AsObjectId;
+                    o.OriginalFileName = document["OriginalFileName"].AsString;
+                    o.DataHash = document["DataHash"].AsString;
+                    return o;
+                }).ToArray();
             }
         }
 

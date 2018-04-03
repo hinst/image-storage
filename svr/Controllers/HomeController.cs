@@ -1,5 +1,6 @@
 using System.IO;
 using Microsoft.AspNetCore.Mvc;
+using MongoDB.Driver;
 
 namespace image_storage.Controllers {
 
@@ -13,8 +14,13 @@ namespace image_storage.Controllers {
         }
 
         [HttpGet("CheckIfAdmin")]
-        public ActionResult CheckIfAdmin() {
+        public JsonResult CheckIfAdmin() {
             return Json(this.User.IsInRole(Role.Admin.ToString()));
+        }
+
+        [HttpGet("GetImages")]
+        public JsonResult GetImages() {
+            return Json(new ImageDB().Headers);
         }
     }
     
