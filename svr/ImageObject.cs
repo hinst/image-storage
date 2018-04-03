@@ -1,9 +1,8 @@
 using MongoDB.Bson;
-using MongoDB.Bson.Serialization.Attributes;
 using System.Security.Cryptography;
-using MongoDB.Bson.Serialization.Attributes;
 
-namespace image_storage {
+namespace image_storage
+{
 
     class ImageObject {
         public ObjectId Id { get; set; }
