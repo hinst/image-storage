@@ -1,3 +1,4 @@
 /web/js-bin/
 /web/node_modules
 /svr/adminPassword.txt
+/svr/load.bat
