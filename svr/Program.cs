@@ -18,8 +18,21 @@ namespace image_storage
 
         public static void Main(string[] args)
         {
-            var host = BuildWebHost(args);
-            host.Run();
+            if (args.Length > 0) {
+                var app = new Program();
+                app.Run(args);
+            } else {
+                var host = BuildWebHost(args);
+                host.Run();
+            }
+        }
+
+        public void Run(string[] args) {
+            if (args[0] == "loadFiles") {
+                var loader = new FileLoader();
+                loader.Dir = args[1];
+                loader.Run();
+            }
         }
 
         public static IWebHost BuildWebHost(string[] args) =>
