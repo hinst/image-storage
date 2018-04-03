@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using MongoDB.Driver;
 
@@ -22,7 +23,7 @@ namespace image_storage {
             }
         }
 
-        public ImageObject[] Headers {
+        public IEnumerable<ImageObject> Headers {
             get {
                 var documents = Images.Find(x => true).Project(Builders<ImageObject>.Projection.Exclude(x => x.Data)).ToList();
                 return documents.Select(document => {
@@ -31,7 +32,7 @@ namespace image_storage {
                     o.OriginalFileName = document["OriginalFileName"].AsString;
                     o.DataHash = document["DataHash"].AsString;
                     return o;
-                }).ToArray();
+                });
             }
         }
 

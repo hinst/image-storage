@@ -1,4 +1,5 @@
 using System.IO;
+using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Driver;
 
@@ -20,7 +21,10 @@ namespace image_storage.Controllers {
 
         [HttpGet("GetImages")]
         public JsonResult GetImages() {
-            return Json(new ImageDB().Headers);
+            var images = new ImageDB().Headers;
+            images = images.OrderBy(image => image.Id.CreationTime);
+            var ids = images.Select(image => image.Id.ToString());
+            return Json(ids);
         }
     }
     
