@@ -3,10 +3,9 @@ using MongoDB.Driver;
 namespace image_storage {
 
     class ImageDB {
-
         IMongoDatabase DB;
         const string dbName = "h-image-storage";
-        const string imagesCollectionName = "images";
+        const string imagesCollectionName = dbName;
 
         public ImageDB() {
             var client = new MongoClient();
@@ -15,7 +14,10 @@ namespace image_storage {
 
         public IMongoCollection<ImageObject> Images {
             get {
-                return DB.GetCollection<ImageObject>(imagesCollectionName);
+                var collection = DB.GetCollection<ImageObject>(imagesCollectionName);
+                collection.Indexes.CreateOne(new IndexKeysDefinitionBuilder<ImageObject>().Ascending(x => x.DataHash));
+                collection.Indexes.CreateOne(new IndexKeysDefinitionBuilder<ImageObject>().Ascending(x => x.OriginalFileName));
+                return collection;
             }
         }
 

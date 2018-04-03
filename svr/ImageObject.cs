@@ -1,9 +1,12 @@
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 using System.Security.Cryptography;
 using MongoDB.Bson.Serialization.Attributes;
 
 namespace image_storage {
 
     class ImageObject {
+        public ObjectId Id { get; set; }
         public string OriginalFileName { get; set; }
         public byte[] Data { get; set; }
         public string DataHash { get; set; }
