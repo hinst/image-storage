@@ -60,6 +60,7 @@ namespace image_storage
             useStatic("js-bin");
             useStatic("js-3rd");
             useStatic("css-3rd");
+            useStatic("css");
             useStatic("src-html");
             app.UseAuthentication();
             app.UseMvc();
