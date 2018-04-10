@@ -26,6 +26,16 @@ namespace image_storage.Controllers {
             var ids = images.Select(image => image.Id.ToString());
             return Json(ids);
         }
+
+        [HttpGet("GetImage")]
+        public JsonResult GetImage(string id) {
+            var image = new ImageDB().GetImageByIdString(id);
+            if (image != null) {
+                var webImage = new WebImage(image);
+                return Json(webImage);
+            }
+            return Json(false);
+        }
     }
     
 }

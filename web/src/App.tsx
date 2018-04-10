@@ -24,6 +24,7 @@ namespace hImageStorage {
 
         initWidget(w: Widget) {
             w.webPath = this.webPath;
+            w.appPath = this.appRootPath;
             w.init();
         }
 

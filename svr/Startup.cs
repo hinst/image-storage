@@ -47,8 +47,10 @@ namespace image_storage
             UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager)
         {
             app.UseResponseCompression();
-            if (env.IsDevelopment())
+            if (env.IsDevelopment() || true) {
+                Log.Info("IsDevelopment");
                 app.UseDeveloperExceptionPage();
+            }
             void useStatic(string dir)
             {
                 app.UseStaticFiles(new StaticFileOptions {

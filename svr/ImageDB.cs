@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using MongoDB.Bson;
 using MongoDB.Driver;
 
 namespace image_storage {
@@ -34,6 +35,15 @@ namespace image_storage {
                     return o;
                 });
             }
+        }
+
+        public ImageObject GetByHash(string hash) {
+            return Images.Find(x => x.DataHash == hash).FirstOrDefault();
+        }
+
+        public ImageObject GetImageByIdString(string id) {
+            var objectId = new ObjectId(id);
+            return Images.Find(x => x.Id == objectId).FirstOrDefault();
         }
 
     }
