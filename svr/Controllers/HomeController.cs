@@ -1,6 +1,7 @@
 using System.IO;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using MimeTypes;
 using MongoDB.Driver;
 
 namespace image_storage.Controllers {
@@ -29,13 +30,23 @@ namespace image_storage.Controllers {
 
         [HttpGet("GetImage")]
         public JsonResult GetImage(string id) {
-            var image = new ImageDB().GetImageByIdString(id);
+            var image = new ImageDB().GetImageByIdString(id, false);
             if (image != null) {
                 var webImage = new WebImage(image);
                 return Json(webImage);
             }
             return Json(false);
         }
+
+        [HttpGet("GetImageData")]
+        public FileResult GetImageData(string id) {
+            var image = new ImageDB().GetImageByIdString(id, true);
+            if (image != null) {
+                return File(image.Data, MimeTypeMap.GetMimeType(Path.GetExtension(image.OriginalFileName)));
+            }
+            return File(new byte[]{}, "text/plain");
+        }
+
     }
     
 }

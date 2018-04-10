@@ -9,7 +9,7 @@ namespace hImageStorage {
                 <div>
                     <button class="w3-btn w3-black">&lt;</button>
                     <button class="w3-btn w3-black">&gt;</button>
-                    <hr/>
+                    <hr style="margin-top: 0px; margin-bottom: 0px;"/>
                     {this.imageUI = <img alt="gallery image" class="h-image-storage-gallery-image"/>}
                 </div>
             );
@@ -35,11 +35,11 @@ namespace hImageStorage {
                 url: this.appPath + "/GetImage?id=" + encodeURIComponent(id),
                 success: $.proxy(this.receiveImage, this),
             });
+            this.imageUI.setAttribute("src", this.appPath + "/GetImageData?id=" + encodeURIComponent(id));
         }
 
         receiveImage(imageObject: WebImage) {
             console.log(imageObject.originalFileName);
-            this.imageUI.setAttribute("src", "data:" + imageObject.mimeType + ";base64," + imageObject.url);
         }
     }
 }

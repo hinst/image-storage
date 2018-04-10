@@ -5,4 +5,5 @@ hr {
 
 .h-image-storage-gallery-image {
     border: 1px solid transparent;
+    max-width: 100%;
 }

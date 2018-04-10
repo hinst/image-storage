@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using MongoDB.Bson;
+using MongoDB.Bson.Serialization;
 using MongoDB.Driver;
 
 namespace image_storage {
@@ -24,9 +25,11 @@ namespace image_storage {
             }
         }
 
+        ProjectionDefinition<ImageObject> NoDataProjection => Builders<ImageObject>.Projection.Exclude(x => x.Data);
+
         public IEnumerable<ImageObject> Headers {
             get {
-                var documents = Images.Find(x => true).Project(Builders<ImageObject>.Projection.Exclude(x => x.Data)).ToList();
+                var documents = Images.Find(x => true).Project(NoDataProjection).ToList();
                 return documents.Select(document => {
                     var o = new ImageObject();
                     o.Id = document["_id"].AsObjectId;
@@ -41,9 +44,14 @@ namespace image_storage {
             return Images.Find(x => x.DataHash == hash).FirstOrDefault();
         }
 
-        public ImageObject GetImageByIdString(string id) {
+        public ImageObject GetImageByIdString(string id, bool withData) {
             var objectId = new ObjectId(id);
-            return Images.Find(x => x.Id == objectId).FirstOrDefault();
+            if (withData)
+                return Images.Find(x => x.Id == objectId).FirstOrDefault();
+            else 
+                return BsonSerializer.Deserialize<ImageObject>(
+                    Images.Find(x => x.Id == objectId).Project(NoDataProjection).FirstOrDefault()
+                );
         }
 
     }
