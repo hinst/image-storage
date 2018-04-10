@@ -32,13 +32,14 @@ namespace hImageStorage {
 
         loadImage(id: string) {
             $.ajax({
-                url: this.appPath + "/GetImage/" + encodeURIComponent(id),
+                url: this.appPath + "/GetImage?id=" + encodeURIComponent(id),
                 success: $.proxy(this.receiveImage, this),
             });
         }
 
         receiveImage(imageObject: WebImage) {
-            console.log(imageObject.OriginalFileName);
+            console.log(imageObject.originalFileName);
+            this.imageUI.setAttribute("src", "data:" + imageObject.mimeType + ";base64," + imageObject.url);
         }
     }
 }
