@@ -5,12 +5,12 @@ namespace hImageStorage {
         imageUI: HTMLElement;
         list: string[];
         init() {
+            this.menuBar.append(<button class="w3-btn w3-black">&lt;</button>);
+            this.menuBar.append(<button class="w3-btn w3-black">&gt;</button>);
             this.element = $(
                 <div>
-                    <button class="w3-btn w3-black">&lt;</button>
-                    <button class="w3-btn w3-black">&gt;</button>
                     <hr style="margin-top: 0px; margin-bottom: 0px;"/>
-                    {this.imageUI = <img alt="gallery image" class="h-image-storage-gallery-image"/>}
+                    {this.imageUI = <img alt="gallery image" class="gallery-image"/>}
                 </div>
             );
             this.loadList();

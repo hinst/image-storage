@@ -5,6 +5,7 @@ namespace hImageStorage {
         element: JQuery;
         webPath: hts.WebPath;
         appPath: string;
+        menuBar: JQuery;
         init() {
         }
     }

@@ -4,7 +4,7 @@ namespace React {
             if (typeof content == "string")
                 element.innerHTML += content;
             if (typeof content == "object")
-                element.appendChild(content);
+                $(element).append(content);
         }
     }
 

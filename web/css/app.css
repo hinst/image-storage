@@ -3,7 +3,33 @@ hr {
     margin-bottom: 2px;
 }
 
-.h-image-storage-gallery-image {
+.h-image-storage .gallery-image {
     border: 1px solid transparent;
     max-width: 100%;
+}
+
+.menuBar > button, 
+.menuBar > a,
+.menuBar > div
+{
+    margin: 1px 2px 2px 1px;
+}
+
+.h-image-storage .hamburger {
+    height: 39px;
+    padding: 4px 5px 0px 5px;
+    border-radius: 0px;
+}
+
+.h-image-storage .hamburgerSausage {
+    width: 29px;
+    height: 4px; 
+    background-color: white; 
+    margin: 5px 0;
+}
+
+.h-image-storage .appMenu {
+    max-width: auto;
+    padding: 4px;
+    border: 1px solid gray;
 }
