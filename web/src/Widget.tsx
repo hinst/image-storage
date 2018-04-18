@@ -2,7 +2,7 @@
 
 namespace hImageStorage {
     export class Widget {
-        element: JQuery;
+        element: JQuery = $(<div></div>);
         webPath: hts.WebPath;
         appPath: string;
         menuBar: JQuery;

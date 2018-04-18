@@ -1,4 +1,6 @@
 namespace React {
+    var UID: number = 0;
+    const idPrefix = "react_";
     function addContents(element: HTMLElement, contents: any[]) {
         for (var content of contents) {
             if (typeof content == "string")
@@ -19,6 +21,8 @@ namespace React {
 
     export function createElement(tag, attributes, ...contents) {
         const element: HTMLElement = document.createElement(tag);
+        ++UID;
+        element.id = idPrefix + UID;
         setAttributes(element, attributes);
         addContents(element, contents);
         return element;

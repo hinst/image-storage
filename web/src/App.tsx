@@ -6,16 +6,20 @@
 namespace hImageStorage {
 
     export class App {
-        public appRootPath = "/images"
-        public webPath = new hts.WebPath();
-        public mainCtnr: JQuery;
-        public menuBar: JQuery;
-        public hamburger: JQuery;
-        public appMenu: JQuery;
-        public fhb: HTMLInputElement;
-
         constructor() {
             console.log("webPath is '" + this.webPath.path + "'");
+        }
+
+        public appRootPath = "/images"
+        public webPath = new hts.WebPath();
+        mainCtnr: JQuery;
+        menuBar: JQuery;
+        hamburger: JQuery;
+        appMenu: JQuery;
+        fitHeightBoxId: string;
+        gallery: Gallery;
+        get fitHeightBox(): HTMLInputElement {
+            return document.getElementById(this.fitHeightBoxId) as HTMLInputElement;
         }
 
         run() {
@@ -36,7 +40,7 @@ namespace hImageStorage {
             if (this.webPath.checkRouteMatch(this.appRootPath)) {
                 this.runRoot();
             }
-            this.fhb.onclick = () => console.log("!");
+            this.fitHeightBox.onchange = () => this.receiveFitHeightBoxChange(this.fitHeightBox.checked);
         }
 
         private createHamburger() {
@@ -47,32 +51,34 @@ namespace hImageStorage {
 
         private createAppMenu() {
             const fitHeightBox: HTMLInputElement = <input type="checkbox" name="fitHeightBox"/>;
-            //fitHeightBox.onclick = () => this.receiveFitHeightBoxChange(fitHeightBox.value);
             const appMenu = $(
                 <div class="appMenu" style="position: absolute; display: none">
                     {fitHeightBox} fit height
                 </div>
             );
-            this.fhb = fitHeightBox;
+            this.fitHeightBoxId = fitHeightBox.id;
             return appMenu;
         }
 
         private receiveFitHeightBoxChange(value: boolean) {
-            console.log(value);
+            if (this.gallery != null)
+                this.gallery.fitHeight = value;
         }
 
-        private initWidget(w: Widget) {
+        private prepareWidget(w: Widget) {
             w.webPath = this.webPath;
             w.appPath = this.appRootPath;
             w.menuBar = this.menuBar;
-            w.init();
         }
 
         private runRoot() {
             const w = new Gallery();
-            this.initWidget(w);
+            this.prepareWidget(w);
             this.mainCtnr.append(w.element);
+            w.init();
+            this.gallery = w;
         }
+
     }
     const app = new App();
     app.run();

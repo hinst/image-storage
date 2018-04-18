@@ -4,16 +4,24 @@ namespace hImageStorage {
     export class Gallery extends Widget {
         imageUI: HTMLElement;
         list: string[];
+
+        _fitHeight: boolean;
+        set fitHeight(fit: boolean) {
+            this._fitHeight = fit;
+            this.updateImageHeight();
+        }
+
         init() {
             this.menuBar.append(<button class="w3-btn w3-black">&lt;</button>);
             this.menuBar.append(<button class="w3-btn w3-black">&gt;</button>);
-            this.element = $(
+            this.element.append(
                 <div>
                     <hr style="margin-top: 0px; margin-bottom: 0px;"/>
                     {this.imageUI = <img alt="gallery image" class="gallery-image"/>}
                 </div>
             );
             this.loadList();
+            $(window).on("resize", () => this.updateImageHeight());
         }
 
         loadList() {
@@ -39,7 +47,10 @@ namespace hImageStorage {
         }
 
         receiveImage(imageObject: WebImage) {
-            console.log(imageObject.originalFileName);
+        }
+
+        updateImageHeight() {
+            $(this.imageUI).css("max-height", this._fitHeight ? window.innerHeight : "");
         }
     }
 }
