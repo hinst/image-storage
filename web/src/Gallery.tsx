@@ -12,7 +12,8 @@ namespace hImageStorage {
             this.updateImageHeight();
         }
 
-        init() {
+        constructor(element: JQuery, proto: Widget) {
+            super(element, proto);
             this.menuBar.append(<button class="w3-btn w3-black" name="ltButton">&lt;</button>);
             this.menuBar.on("click", "[name='ltButton']", () => this.receiveNavigateClick(false));
             this.menuBar.append(<button class="w3-btn w3-black" name="rtButton">&gt;</button>);

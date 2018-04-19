@@ -65,17 +65,18 @@ namespace hImageStorage {
                 this.gallery.fitHeight = value;
         }
 
-        private prepareWidget(w: Widget) {
+        private createProtoWidget(): Widget {
+            const w = new Widget(null, null);
             w.webPath = this.webPath;
             w.appPath = this.appRootPath;
             w.menuBar = this.menuBar;
+            return w;
         }
 
         private runRoot() {
-            const w = new Gallery();
-            this.prepareWidget(w);
-            this.mainCtnr.append(w.element);
-            w.init();
+            const div = $(<div></div>);
+            this.mainCtnr.append(div);
+            const w = new Gallery(div, this.createProtoWidget());
             this.gallery = w;
         }
 

@@ -8,7 +8,13 @@ namespace hImageStorage {
         webPath: hts.WebPath;
         appPath: string;
         menuBar: JQuery;
-        init() {
+        constructor(element: JQuery, proto: Widget) {
+            this.element = element;
+            if (proto != null) {
+                this.webPath = proto.webPath;
+                this.appPath = proto.appPath;
+                this.menuBar = proto.menuBar;
+            }
         }
         static getUID() {
             ++UID;
