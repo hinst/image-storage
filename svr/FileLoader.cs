@@ -8,10 +8,11 @@ namespace image_storage {
         Logger Log = LogManager.GetCurrentClassLogger();
         
         public string Dir;
+        public string DbConnectionString;
         IMongoCollection<ImageObject> Images;
 
         public void Run() {
-            Images = new ImageDB().Images;
+            Images = new ImageDB(this.DbConnectionString).Images;
             var files = Directory.GetFiles(Dir);
             LoadFiles(files);
         }

@@ -1,0 +1,1 @@
+dotnet run loadFiles C:\Pictures\Cats --db=mongodb://192.168.1.36

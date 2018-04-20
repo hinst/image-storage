@@ -30,6 +30,7 @@ namespace image_storage
         public void Run(string[] args) {
             if (args[0] == "loadFiles") {
                 var loader = new FileLoader();
+                loader.DbConnectionString = new CommandLineArgs(args).Get("db");
                 loader.Dir = args[1];
                 loader.Run();
             }

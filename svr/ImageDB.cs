@@ -11,8 +11,10 @@ namespace image_storage {
         const string dbName = "h-image-storage";
         const string imagesCollectionName = dbName;
 
-        public ImageDB() {
-            var client = new MongoClient();
+        public ImageDB(string connectionString = null) {
+            var client = connectionString == null
+                ? new MongoClient() 
+                : new MongoClient(connectionString);
             DB = client.GetDatabase(dbName);
         }
 
