@@ -4,3 +4,4 @@ web/js-3rd
 web/js-bin
 web/src-html
 svr/bin/Debug/netcoreapp2.0
+svr/start-arm.sh

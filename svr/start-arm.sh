@@ -1,0 +1,1 @@
+./bin/Debug/netcoreapp2.0/linux-arm/image-storage
