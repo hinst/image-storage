@@ -1,0 +1,6 @@
+web/css
+web/css-3rd
+web/js-3rd
+web/js-bin
+web/src-html
+svr/bin/Debug/netcoreapp2.0
