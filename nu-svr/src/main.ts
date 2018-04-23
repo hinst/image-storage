@@ -1,5 +1,4 @@
 require('source-map-support').install();
-import * as express from "express";
 import {App} from "./App"
 
 console.log("STARTING...");
