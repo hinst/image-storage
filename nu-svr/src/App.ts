@@ -17,13 +17,19 @@ export class App {
         });
     }
 
-    bindStaticFolder(webPath: string, localPath: string) {
+    private bindStaticFolder(webPath: string, localPath: string) {
         localPath = path.normalize(localPath);
         log.info(webPath + " -> " + localPath);
         expressApp.use(webPath, express.static(localPath));
     }
 
-    prepareIndexPage() {
+    private bindStaticWeb(folder: string) {
+        const webPath = Settings.WebPath + "/" + folder;
+        const localPath = path.normalize(Settings.AppDir + "/../web/" + folder);
+        this.bindStaticFolder(webPath, localPath);
+    }
+
+    private prepareIndexPage() {
         const text = fs.readFileSync(Settings.AppDir + "/../web/src-html/index.html").toString();
         const processedText = text.replace("{webPath}", Settings.WebPath);
         const outputFilePath = Settings.AppWwwBinDir + "/index.html";
