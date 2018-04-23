@@ -1,0 +1,9 @@
+{
+    "compilerOptions": {
+        "target": "ES2015",
+        "module": "es2015",
+        "sourceRoot": "./src/",
+        "outDir": "./bin/",
+        "sourceMap": true
+    }
+}
