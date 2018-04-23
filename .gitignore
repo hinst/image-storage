@@ -2,3 +2,4 @@
 /web/node_modules
 /svr/adminPassword.txt
 /svr/load.bat
+/nu-svr/node_modules/
